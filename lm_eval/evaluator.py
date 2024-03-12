@@ -305,7 +305,7 @@ def evaluate(
                             doc["choices"][i] = p.unigram_shuffle(doc["choices"][i], task_name)
                     #Option to add extra answers to the dataset
                     if extra_answers: 
-                        doc["choices"].append("extra answer")
+                        doc["option3"] = "extra answer"
                     elif posReplace == "VERB":
                         doc['sentence'] = p.verbSynonyms(doc['sentence'])
                     elif remove_question:
