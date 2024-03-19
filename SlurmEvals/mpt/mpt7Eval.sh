@@ -16,9 +16,8 @@ flight env activate gridware
 #Remove any unwanted modules
 module purge
 module load libs/nvidia-cuda/11.2.0/bin
-module load /users/adbt150/yes
 
-source ~/yes/etc/profile.d/conda.sh
+source ~/archive/miniconda3/etc/profile.d/conda.sh
 conda activate llm
 nvidia-smi
 GPUS_PER_NODE=1
@@ -31,23 +30,35 @@ export RANK=0
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/mpt-7b \
-            --batch_size 16 \
+            --batch_size 5 \
             --device cuda:0 \
             --num_fewshot 25 \
-            --tasks arc_challenge
+            --tasks arc_challenge \
+            --write_out
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/mpt-7b \
-            --batch_size 16 \
+            --batch_size 5 \
             --device cuda:0 \
             --num_fewshot 10 \
-            --tasks hellaswag
+            --tasks hellaswag \
+            --write_out 
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/mpt-7b \
-            --batch_size 16 \
+            --batch_size 5 \
             --device cuda:0 \
             --num_fewshot 0 \
-            --tasks truthfulqa_mc 
+            --tasks truthfulqa_mc \
+            --write_out
+
+python ~/lm-evaluation-harness/main.py \
+            --model hf-causal-experimental \
+            --model_args pretrained=/users/adbt150/archive/mpt-7b \
+            --batch_size 5 \
+            --device cuda:0 \
+            --num_fewshot 5 \
+            --tasks winogrande \
+            --write_out
