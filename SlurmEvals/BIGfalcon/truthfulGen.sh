@@ -30,7 +30,7 @@ export RANK=0
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/falcon-40b \
-            --batch_size 5 \
+            --batch_size 1 \
             --device cuda:0 \
             --num_fewshot 0 \
             --tasks truthfulqa_gen \

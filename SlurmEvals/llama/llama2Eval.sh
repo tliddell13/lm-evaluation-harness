@@ -34,8 +34,7 @@ python ~/lm-evaluation-harness/main.py \
             --device cuda:0 \
             --num_fewshot 5 \
             --tasks winogrande\
-            --write_out \
-            --extra_answers True
+            --write_out 
 
 
 
