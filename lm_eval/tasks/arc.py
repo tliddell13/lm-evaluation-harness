@@ -15,6 +15,7 @@ Homepage: https://allenai.org/data/arc
 from lm_eval.base import MultipleChoiceTask
 import pandas as pd
 import os
+# Relative path wont work, dont know why
 # Get the directory where the current script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Construct the absolute file path
@@ -72,7 +73,7 @@ class ARCEasy(MultipleChoiceTask):
             "gold": ["A", "B", "C", "D", "E"].index(doc["answerKey"]),
         }
         # Add an extra answer to the choices if there are only 4
-        if len(out_doc["choices"]) == 4:
+        if len(out_doc["choices"]) < 5:
             # Pick a random answer from the additional data
             out_doc["choices"].append(randomAnswers.sample()["text"].values[0])
         return out_doc
