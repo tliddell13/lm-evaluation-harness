@@ -15,7 +15,7 @@ Homepage: https://allenai.org/data/arc
 from lm_eval.base import MultipleChoiceTask
 import pandas as pd
 # Get the additional data of high probability sentences
-randomAnswers = pd.read_csv("../additional_data/arc_random_answers.csv")
+randomAnswers = pd.read_csv("additionalData/commonSentences.csv")
 randomAnswers.columns = ["text"]
 
 
