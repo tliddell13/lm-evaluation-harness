@@ -33,7 +33,7 @@ python ~/lm-evaluation-harness/main.py \
             --batch_size 10 \
             --device cuda:0 \
             --num_fewshot 5 \
-            --tasks winogrande\
+            --tasks arc_challenge \
             --write_out 
 
 

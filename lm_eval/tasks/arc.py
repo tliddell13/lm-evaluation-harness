@@ -13,6 +13,10 @@ a co-occurrence method fail to answer correctly) and an Easy Set of 5,197 questi
 Homepage: https://allenai.org/data/arc
 """
 from lm_eval.base import MultipleChoiceTask
+import pandas as pd
+# Get the additional data of high probability sentences
+randomAnswers = pd.read_csv("../additional_data/arc_random_answers.csv")
+randomAnswers.columns = ["text"]
 
 
 _CITATION = """
@@ -62,6 +66,10 @@ class ARCEasy(MultipleChoiceTask):
             "choices": doc["choices"]["text"],
             "gold": ["A", "B", "C", "D", "E"].index(doc["answerKey"]),
         }
+        # Add an extra answer to the choices if there are only 4
+        if len(out_doc["choices"]) == 4:
+            # Pick a random answer from the additional data
+            out_doc["choices"].append(randomAnswers.sample()["text"].values[0])
         return out_doc
 
     def doc_to_text(self, doc):
