@@ -14,8 +14,13 @@ Homepage: https://allenai.org/data/arc
 """
 from lm_eval.base import MultipleChoiceTask
 import pandas as pd
-# Get the additional data of high probability sentences
-randomAnswers = pd.read_csv("commonSentences.csv")
+import os
+# Get the directory where the current script is located
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# Construct the absolute file path
+file_path = os.path.join(script_dir, 'commonSentences.csv')
+# Use the absolute file path
+randomAnswers = pd.read_csv(file_path)
 randomAnswers.columns = ["text"]
 
 
