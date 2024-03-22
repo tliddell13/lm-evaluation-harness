@@ -17,7 +17,7 @@ flight env activate gridware
 module purge
 module load libs/nvidia-cuda/11.2.0/bin
 
-source ~/miniconda3/etc/profile.d/conda.sh
+source ~/archive/miniconda3/etc/profile.d/conda.sh
 conda activate llm
 nvidia-smi
 GPUS_PER_NODE=1
@@ -32,8 +32,8 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 0 \
-            --tasks truthfulqa_gen \
+            --num_fewshot 5 \
+            --tasks arc_challenge \
             --write_out \
             --shuffle unigram
 
