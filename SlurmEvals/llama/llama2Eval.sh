@@ -11,16 +11,16 @@
 
 #Enable modules command
 source /opt/flight/etc/setup.sh
-flight env activate gridware
+#flight env activate gridware
 
 #Remove any unwanted modules
 module purge
-module load libs/nvidia-cuda/11.2.0/bin
+#module load libs/nvidia-cuda/11.2.0/bin
 
 source ~/archive/miniconda3/etc/profile.d/conda.sh
 conda activate llm
-nvidia-smi
-GPUS_PER_NODE=1
+#nvidia-smi
+#GPUS_PER_NODE=1
 # Number of GPU workers, for single-worker training, please set to 1
 WORKER_CNT=1
 export MASTER_PORT=8214
@@ -30,10 +30,10 @@ export RANK=0
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
-            --batch_size 10 \
+            --batch_size 5 \
             --device cuda:0 \
-            --num_fewshot 5 \
-            --tasks arc_challenge \
+            --num_fewshot 0 \
+            --tasks truthfulqa_gen \
             --write_out 
 
 

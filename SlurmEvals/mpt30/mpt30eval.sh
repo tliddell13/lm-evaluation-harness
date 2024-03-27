@@ -30,7 +30,7 @@ export RANK=0
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/mpt-30b \
-            --batch_size 5 \
+            --batch_size 1 \
             --device cuda:0 \
             --num_fewshot 10 \
             --tasks hellaswag \
@@ -38,7 +38,7 @@ python ~/lm-evaluation-harness/main.py \
 python ~/lm-evaluation-harness/main.py \
 	    --model hf-causal-experimental \
 	    --model_args pretrained=/users/adbt150/archive/mpt-30b \
-	    --batch_size 5 \
+	    --batch_size 1 \
 	    --device cuda:0 \
 	    --num_fewshot 25 \
 	    --tasks arc_challenge \
