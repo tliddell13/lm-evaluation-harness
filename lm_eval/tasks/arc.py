@@ -13,6 +13,7 @@ a co-occurrence method fail to answer correctly) and an Easy Set of 5,197 questi
 Homepage: https://allenai.org/data/arc
 """
 from lm_eval.base import MultipleChoiceTask
+from lm_eval.permutations import get_sentence_subject, get_fake_answer
 import pandas as pd
 import os
 # Relative path wont work, dont know why
@@ -74,8 +75,11 @@ class ARCEasy(MultipleChoiceTask):
         }
         # Add an extra answer to the choices if there are only 4
         if len(out_doc["choices"]) < 5:
-            # Pick a random answer from the additional data
-            out_doc["choices"].append(randomAnswers.sample()["text"].values[0])
+            # Generate a random answer using the api (this might be slow)
+            word = get_sentence_subject(doc["question"])
+            # Use the mixtral model
+            mixtral = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+            out_doc["choices"].append(get_fake_answer(word, mixtral))
         return out_doc
 
     def doc_to_text(self, doc):

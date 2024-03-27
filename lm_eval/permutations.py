@@ -1,7 +1,10 @@
 import nltk
 import random
+import requests
 import spacy
 from nltk.corpus import wordnet
+import transformers 
+
 nlp = spacy.load("en_core_web_sm")
 
 nltk.download('punkt')
@@ -78,3 +81,42 @@ def verbSynonyms(words):
         else:
             text.append(token.text)
     return " ".join(text)
+
+# Gets the subject of a sentence. If one is not found, will return first noun, then first word
+def get_sentence_subject(sentence):
+    # Return the first subject found in the sentence
+    doc = nlp(sentence)
+    for token in doc:
+        if token.dep_ == 'nsubj':
+            return token.text
+        # if the subject doesn't exist, return the first noun
+        if token.pos_ == 'NOUN':
+            return token.text
+        # Worst case just get the first word
+        return doc[0].text
+    return "Empty"
+
+# Generate a sentecne with chosen word, from a chosen model
+def get_fake_answer(word, model_id):
+    API_TOKEN = "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"
+    API_URL = "https://api-inference.huggingface.co/models/" + model_id
+    prompt = "Generate a sentence with the word " + word + " in it."
+    # Create the payload
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "max_new_tokens": 40
+        }
+    }
+    # Construct the headers
+    headers = {"Authorization": f"Bearer {API_TOKEN}"}
+    # Get the response from the model
+    response = requests.post(API_URL, headers=headers, json=payload)
+    data = response.json()
+    
+    # Remove the prompt from the generated sentence
+    answer = data[0]['generated_text'][len(prompt):]
+    # End at the first period if it exists
+    if '.' in answer:
+        answer = answer[:answer.index('.') + 1]
+    return answer
