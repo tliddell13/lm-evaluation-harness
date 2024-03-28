@@ -276,80 +276,44 @@ def evaluate(
                 docs_for_decontamination[(task_name, task_set)].append(
                     task.doc_to_decontamination_query(doc)
                 )
-            # If it is from the hendrycks data use the special shuffle function
-            if "hendrycksTest" in task_name:
-                if shuffle == "unigram":
-                    doc['query'] = p.hendrycks_unigram_shuffle(doc['query'])
-                # If I add the option to shuffle answers for Hendrycks I will create a slightly different function
-                elif posReplace == "VERB":
+            # Apply the permutations here
+            # If question is accessed using 'query'
+            if 'query' in doc:
+                # Check if shuffle is set
+                if shuffle:
+                    doc['query'] = p.shuffle(doc['query'], shuffle, task_name)
+                # Check if PosReplace is set
+                if posReplace == "VERB":
                     doc['query'] = p.verbSynonyms(doc['query'])
+                # Check if remove question is set
                 elif remove_question:
                     doc['query'] = ' '
-            elif task_name != "truthfulqa_mc" and task_name != "truthfulqa_gen" and task_name != "gsm8k":
-                if task_name == "arc_challenge":
-                    if shuffle == "unigram":
-                        doc['query'] = p.unigram_shuffle(doc['query'], task_name)
-                        doc['query'] = "Question: " + doc['query'] + "\nAnswer:"
-                    if shuffleAnswer == "unigram":
-                        for i in range(len(doc["choices"])):
-                                doc["choices"][i] = p.unigram_shuffle(doc["choices"][i], task_name)
-                    elif posReplace == "VERB":
-                        doc['query'] = p.verbSynonyms(doc['query'])
-                    elif remove_question:
-                        doc['query'] = ' '
-                elif task_name == "winogrande":
-                    if shuffle == "unigram":
-                        doc['sentence'] = p.unigram_shuffle(doc['sentence'], task_name)
-                    if shuffleAnswer == "unigram":
-                        for i in range(len(doc["choices"])):
-                            doc["choices"][i] = p.unigram_shuffle(doc["choices"][i], task_name)
-                    #Option to add extra answers to the dataset
-                    if extra_answers: 
-                        doc["option3"] = "extra answer"
-                    elif posReplace == "VERB":
-                        doc['sentence'] = p.verbSynonyms(doc['sentence'])
-                    elif remove_question:
-                        doc['sentence'] = ' '
-                else:
-                    if shuffle == "unigram":
-                        doc['query'] = p.unigram_shuffle(doc['query'], task_name)
-                    if shuffleAnswer == "unigram":
-                        for i in range(len(doc["choices"])):
-                            doc["choices"][i] = p.unigram_shuffle(doc["choices"][i], task_name)
-                    elif posReplace == "VERB":
-                        doc['query'] = p.verbSynonyms(doc['query'])
-                    elif remove_question:
-                        doc['query'] = ' '
-                    ## Different type of shuffles if needed
-                    """
-                elif shuffle == "bigram":
-                    doc['query'] = bigram_shuffle(doc['query'])
-                    doc['query'] = "Question: " + doc['query'] + "\nAnswer:"
-                elif shuffle == "trigram":
-                    doc['query'] = trigram_shuffle(doc['query'])
-                    doc['query'] = "Question: " + doc['query'] + "\nAnswer:"
-                    """
-            # Truthful tasks and gsm8k are accessed using 'question'
-            else:
-                if shuffle == "unigram":
-                    doc['question'] = p.unigram_shuffle(doc['question'], task_name)
-                    doc['question'] = doc['question']
-                    ## Different types of shuffles if needed
-                if shuffleAnswer == "unigram":
-                        for i in range(len(doc["choices"])):
-                                doc["choices"][i] = p.unigram_shuffle(doc["choices"][i], task_name)
-                elif posReplace == "VERB":
+            # If question is accessed using 'sentence'
+            elif 'sentence' in doc:
+                if shuffle:
+                    doc['sentence'] = p.shuffle(doc['sentence'], shuffle, task_name)
+                if posReplace == "VERB":
+                    doc['sentence'] = p.verbSynonyms(doc['sentence']) 
+                elif remove_question:
+                    doc['sentence'] = ' '
+            # If question is accessed using 'question'
+            elif 'question' in doc:
+                if shuffle:
+                    doc['question'] = p.shuffle(doc['question'], shuffle, task_name)
+                if posReplace == "VERB":
                     doc['question'] = p.verbSynonyms(doc['question'])
                 elif remove_question:
                     doc['question'] = ' '
-                elif shuffle == "bigram":
-                    doc['question'] = p.bigram_shuffle(doc['question'])
-                    doc['question'] = doc['question'] 
-                elif shuffle == "trigram":
-                    doc['question'] = p.trigram_shuffle(doc['question'])
-                    doc['question'] = doc['question']
-                
-            
+            # Will try adding the extra answer here
+            if extra_answers:
+                # Generate an extra answer using the subject
+                word, pos = p.get_sentence_subject(doc['sentence'])
+                # Generate the sentence using the chosen model
+                model_id = "/users/adbt150/archive/Llama-2-7b-hf" # Can add this as an argument later
+                sentence = p.generate_fake_answer(word, pos, model_id)
+                # Add the generated sentence to the doc
+                doc['choices'].append(sentence)
+
             docs[(task_name, doc_id)] = doc
             ctx = task.fewshot_context(
                 doc=doc, num_fewshot=num_fewshot, rnd=rnd, description=description

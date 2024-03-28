@@ -73,13 +73,6 @@ class ARCEasy(MultipleChoiceTask):
             "choices": doc["choices"]["text"],
             "gold": ["A", "B", "C", "D", "E"].index(doc["answerKey"]),
         }
-        # Add an extra answer to the choices if there are only 4
-        if len(out_doc["choices"]) < 5:
-            # Generate a random answer using the api (this might be slow)
-            word, pos = get_sentence_subject(doc["question"])
-            # Use the mixtral model
-            model_id = "/users/adbt150/archive/Llama-2-7b-hf"
-            out_doc["choices"].append(generate_fake_answer(word, pos, model_id))
         return out_doc
 
     def doc_to_text(self, doc):
