@@ -3,7 +3,11 @@ import random
 import requests
 import spacy
 from nltk.corpus import wordnet
-import transformers 
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    pipeline
+)
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -88,35 +92,34 @@ def get_sentence_subject(sentence):
     doc = nlp(sentence)
     for token in doc:
         if token.dep_ == 'nsubj':
-            return token.text
+            return token.text, 'NOUN'
         # if the subject doesn't exist, return the first noun
         if token.pos_ == 'NOUN':
-            return token.text
+            return token.text, 'NOUN'
         # Worst case just get the first word
-        return doc[0].text
-    return "Empty"
+        return doc[0].text, 'ART'
+    return "Empty", "Empty"
 
-# Generate a sentecne with chosen word, from a chosen model
-def get_fake_answer(word, model_id):
-    API_TOKEN = "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"
-    API_URL = "https://api-inference.huggingface.co/models/" + model_id
-    prompt = "Generate a sentence with the word " + word + " in it."
-    # Create the payload
-    payload = {
-        "inputs": prompt,
-        "parameters": {
-            "max_new_tokens": 40
-        }
-    }
-    # Construct the headers
-    headers = {"Authorization": f"Bearer {API_TOKEN}"}
-    # Get the response from the model
-    response = requests.post(API_URL, headers=headers, json=payload)
-    data = response.json()
+model_id = "/users/adbt150/archive/Llama-2-7b-hf"
+def generate_fake_answer(word, pos, model_id):   
+    tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto")
+
+    # Use the pipeline to generate text
+    generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
+
+    # Start generating a sentence with the word
+    if pos == 'NOUN': 
+        prompt = "The " + word
     
-    # Remove the prompt from the generated sentence
-    answer = data[0]['generated_text'][len(prompt):]
-    # End at the first period if it exists
+    # If no nouns are found the sentence will be completely random
+    else:
+        prompt = word
+
+    # Generate text
+    answer = generator(prompt, max_length=30)
+    answer = answer[0]['generated_text']
+    answer = answer.replace('<200b>', '')  # Remove <200b> characters
     if '.' in answer:
         answer = answer[:answer.index('.') + 1]
     return answer
