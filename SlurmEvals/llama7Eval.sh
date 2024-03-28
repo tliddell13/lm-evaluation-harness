@@ -35,6 +35,6 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks arc_challenge \
             --write_out \
-            --shuffle unigram
+            --extra_answers True
 
 
