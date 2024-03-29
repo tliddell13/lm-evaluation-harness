@@ -277,6 +277,7 @@ def evaluate(
                     task.doc_to_decontamination_query(doc)
                 )
             # Apply the permutations here
+            model_id = "/users/adbt150/archive/Llama-2-7b-hf" # Can add this as an argument later
             # If question is accessed using 'query'
             if 'query' in doc:
                 # Check if shuffle is set
@@ -286,7 +287,7 @@ def evaluate(
                 if posReplace == "VERB":
                     doc['query'] = p.verbSynonyms(doc['query'])
                 # Check if remove question is set
-                elif remove_question:
+                if remove_question:
                     doc['query'] = ' '
             # If question is accessed using 'sentence'
             elif 'sentence' in doc:
@@ -294,7 +295,7 @@ def evaluate(
                     doc['sentence'] = p.shuffle(doc['sentence'], shuffle, task_name)
                 if posReplace == "VERB":
                     doc['sentence'] = p.verbSynonyms(doc['sentence']) 
-                elif remove_question:
+                if remove_question:
                     doc['sentence'] = ' '
             # If question is accessed using 'question'
             elif 'question' in doc:
@@ -302,17 +303,14 @@ def evaluate(
                     doc['question'] = p.shuffle(doc['question'], shuffle, task_name)
                 if posReplace == "VERB":
                     doc['question'] = p.verbSynonyms(doc['question'])
-                elif remove_question:
+                if remove_question:
                     doc['question'] = ' '
-            # Will try adding the extra answer here
-            if extra_answers:
-                # Generate an extra answer using the subject
-                word, pos = p.get_sentence_subject(doc['sentence'])
-                # Generate the sentence using the chosen model
-                model_id = "/users/adbt150/archive/Llama-2-7b-hf" # Can add this as an argument later
-                sentence = p.generate_fake_answer(word, pos, model_id)
-                # Add the generated sentence to the doc
-                doc['choices'].append(sentence)
+                if extra_answers: 
+                    # Generate an extra answer using the subject
+                    word, pos = p.get_sentence_subject(doc['question'])
+                    sentence = p.generate_fake_answer(word, pos, model_id)
+                    # Add the generated sentence to the doc
+                    doc['choices'].append(sentence)
 
             docs[(task_name, doc_id)] = doc
             ctx = task.fewshot_context(
