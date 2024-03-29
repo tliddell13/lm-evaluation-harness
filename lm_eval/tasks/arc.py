@@ -19,11 +19,7 @@ import os
 # Relative path wont work, dont know why
 # Get the directory where the current script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
-# Construct the absolute file path
-file_path = os.path.join(script_dir, 'commonSentences.csv')
-# Use the absolute file path
-randomAnswers = pd.read_csv(file_path)
-randomAnswers.columns = ["text"]
+import permutations as p
 
 
 _CITATION = """
@@ -73,6 +69,11 @@ class ARCEasy(MultipleChoiceTask):
             "choices": doc["choices"]["text"],
             "gold": ["A", "B", "C", "D", "E"].index(doc["answerKey"]),
         }
+        # Add an extra answer to the choices if there are only 4
+        if len(out_doc["choices"]) < 5:
+            word, pos = p.get_sentence_subject(doc["question"])
+            model = "/users/adbt150/archive/Llama-2-7b-hf"
+            out_doc["choices"].append(p.get_fake_answer(word, pos, model))
         return out_doc
 
     def doc_to_text(self, doc):

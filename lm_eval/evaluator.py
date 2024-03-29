@@ -305,12 +305,14 @@ def evaluate(
                     doc['question'] = p.verbSynonyms(doc['question'])
                 if remove_question:
                     doc['question'] = ' '
+                    """
                 if extra_answers: 
                     # Generate an extra answer using the subject
                     word, pos = p.get_sentence_subject(doc['question'])
                     sentence = p.generate_fake_answer(word, pos, model_id)
                     # Add the generated sentence to the doc
                     doc['choices'].append(sentence)
+                    """
 
             docs[(task_name, doc_id)] = doc
             ctx = task.fewshot_context(
