@@ -13,14 +13,12 @@ a co-occurrence method fail to answer correctly) and an Easy Set of 5,197 questi
 Homepage: https://allenai.org/data/arc
 """
 from lm_eval.base import MultipleChoiceTask
-from lm_eval.permutations import get_sentence_subject, generate_fake_answer
+import lm_eval.permutations as p
 import pandas as pd
 import os
 # Relative path wont work, dont know why
 # Get the directory where the current script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
-import permutations as p
-
 
 _CITATION = """
 @article{Clark2018ThinkYH,
