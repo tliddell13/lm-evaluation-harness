@@ -6,7 +6,8 @@ from nltk.corpus import wordnet
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
-    pipeline
+    pipeline,
+    bits_and_bytes
 )
 
 nlp = spacy.load("en_core_web_sm")
