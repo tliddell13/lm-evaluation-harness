@@ -323,6 +323,7 @@ def evaluate(
                     doc['question'] = p.keep_named_entities(doc['question'])
     
                 if extra_answers: 
+                    print("Extra answers")
                     # Generate an extra answer using the subject
                     word, pos = p.get_sentence_subject(doc['question'])
                     sentence = p.generate_fake_answer(word, pos, model, tokenizer)
