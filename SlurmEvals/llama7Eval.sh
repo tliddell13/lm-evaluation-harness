@@ -30,11 +30,11 @@ export RANK=0
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
-            --batch_size 2 \
+            --batch_size 5 \
             --device cuda:0 \
-            --num_fewshot 5 \
+            --num_fewshot 25 \
             --tasks arc_challenge \
             --write_out \
-            --extra_answers True
+            --extra_answers true
 
 

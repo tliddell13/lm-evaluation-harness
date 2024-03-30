@@ -125,11 +125,16 @@ def get_sentence_subject(sentence):
         return doc[0].text, 'ART'
     return "Empty", "Empty"
 
-# Generate a fake answer using a model
-def generate_fake_answer(word, pos, model_id):   
+# Load the model and tokenizer
+def load_model(model_id):
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto")
+    # Print teh model device
+    print("Model Device:", next(model.parameters()).device)
+    return tokenizer, model
 
+# Generate a fake answer using a model
+def generate_fake_answer(word, pos, model, tokenizer):   
     # Use the pipeline to generate text
     generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 

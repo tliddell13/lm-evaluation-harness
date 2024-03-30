@@ -16,7 +16,6 @@ from lm_eval.base import MultipleChoiceTask
 import lm_eval.permutations as p
 import pandas as pd
 import os
-# Relative path wont work, dont know why
 # Get the directory where the current script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
 

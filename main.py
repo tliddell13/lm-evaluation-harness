@@ -50,6 +50,8 @@ def parse_args():
     parser.add_argument("--posReplace", type=str, default=None)
     # This argument is for adding extra options to the dataset
     parser.add_argument("--extra_answers", type=bool, default=None)
+    # Remove or keep only named entities in a prompt
+    parser.add_argument("--named_entities", type=str, default=None)
     return parser.parse_args()
 
 
@@ -96,6 +98,7 @@ def main():
         remove_question=args.remove_question,
         posReplace=args.posReplace,
         extra_answers=args.extra_answers,
+        named_entities=args.named_entities,
     )
 
     dumped = json.dumps(results, indent=2)

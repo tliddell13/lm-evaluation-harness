@@ -35,6 +35,7 @@ def simple_evaluate(
     remove_question=False,
     posReplace=None,
     extra_answers=False,
+    named_entities=None,
 ):
     """Instantiate and evaluate a model on a list of tasks.
 
@@ -127,6 +128,7 @@ def simple_evaluate(
         remove_question = remove_question,
         posReplace = posReplace,
         extra_answers = extra_answers,
+        named_entities = named_entities,
     )
 
     # add info about the model and few shot config
@@ -174,6 +176,7 @@ def evaluate(
     remove_question=False,
     posReplace=None,
     extra_answers=False,
+    named_entities=None,
 ):
     """Instantiate and evaluate a model on a list of tasks.
 
@@ -271,13 +274,14 @@ def evaluate(
         if limit is not None:
             limit = int(len(task_docs) * limit) if limit < 1.0 else int(limit)
 
+        # Load the model if we are appending extra answers
+        if extra_answers:
+            tokenizer, model = p.load_model("/users/adbt150/archive/Llama-2-7b-hf")
         for doc_id, doc in enumerate(itertools.islice(task_docs, 0, limit)):
             if decontaminate and task.should_decontaminate():
                 docs_for_decontamination[(task_name, task_set)].append(
                     task.doc_to_decontamination_query(doc)
                 )
-            # Apply the permutations here
-            model_id = "/users/adbt150/archive/Llama-2-7b-hf" # Can add this as an argument later
             # If question is accessed using 'query'
             if 'query' in doc:
                 # Check if shuffle is set
@@ -289,6 +293,10 @@ def evaluate(
                 # Check if remove question is set
                 if remove_question:
                     doc['query'] = ' '
+                if named_entities == "remove":
+                    doc['query'] = p.remove_named_entities(doc['query'])
+                if named_entities == "keep":
+                    doc['query'] = p.keep_named_entities(doc['query'])
             # If question is accessed using 'sentence'
             elif 'sentence' in doc:
                 if shuffle:
@@ -297,6 +305,10 @@ def evaluate(
                     doc['sentence'] = p.verbSynonyms(doc['sentence']) 
                 if remove_question:
                     doc['sentence'] = ' '
+                if named_entities == "remove":
+                    doc['sentence'] = p.remove_named_entities(doc['sentence'])
+                if named_entities == "keep":
+                    doc['sentence'] = p.keep_named_entities(doc['sentence'])
             # If question is accessed using 'question'
             elif 'question' in doc:
                 if shuffle:
@@ -305,14 +317,18 @@ def evaluate(
                     doc['question'] = p.verbSynonyms(doc['question'])
                 if remove_question:
                     doc['question'] = ' '
-                    """
+                if named_entities == "remove":
+                    doc['question'] = p.remove_named_entities(doc['question'])
+                if named_entities == "keep":
+                    doc['question'] = p.keep_named_entities(doc['question'])
+    
                 if extra_answers: 
                     # Generate an extra answer using the subject
                     word, pos = p.get_sentence_subject(doc['question'])
-                    sentence = p.generate_fake_answer(word, pos, model_id)
+                    sentence = p.generate_fake_answer(word, pos, model, tokenizer)
                     # Add the generated sentence to the doc
                     doc['choices'].append(sentence)
-                    """
+                    
 
             docs[(task_name, doc_id)] = doc
             ctx = task.fewshot_context(
