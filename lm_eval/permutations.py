@@ -10,7 +10,6 @@ from transformers import (
 )
 
 nlp = spacy.load("en_core_web_sm")
-tokenizer = nltk.tokenize.word_tokenize
 
 # Shuffle the words in a sentence
 def shuffle(sentence, task, type):
@@ -20,13 +19,13 @@ def shuffle(sentence, task, type):
     # Keep track of whether we need to re-append the "Question:" token
     appendQuestion = False
     appendAnswer = False
-    words = tokenizer(sentence)  # Tokenize the sentence into words
+    words = nlp(sentence) # Tokenize the sentence into words
     # Check if the question contains "Question:" and "Answer:"
-    if words[0] == "Question":
+    if words[0].text == "Question":
         # Remove the tokens 'Question' and ':' for the shuffle
         words = words[2:]
         appendQuestion = True
-    if words[-2] == "Answer":
+    if words[-2].text == "Answer":
         # Remove the tokens 'Answer' and ':' for the shuffle
         words = words[:-2]
         appendAnswer = True
@@ -113,22 +112,17 @@ def verbSynonyms(words):
 
 # Gets the subject of a sentence. If one is not found, will return first noun, then first word
 def get_sentence_subject(sentence):
-    words = tokenizer(sentence)  # Tokenize the sentence into words
-    # Check if the question contains "Question:" and "Answer:"
-    if words[0] == "Question":
-        # Remove the tokens 'Question' and ':' for the shuffle
-        words = words[2:]
-    # Return the first subject found in the sentence
     doc = nlp(sentence)
+    if doc[0].text == 'Question':
+        doc = doc[1:]
     for token in doc:
         if token.dep_ == 'nsubj':
             return token.text, 'NOUN'
         # if the subject doesn't exist, return the first noun
-        if token.pos_ == 'NOUN':
+        elif token.pos_ == 'NOUN':
             return token.text, 'NOUN'
-        # Worst case just get the first word
-        return doc[0].text, 'ART'
-    return "Empty", "Empty"
+    # Worst case just get the first word
+    return doc[0].text, 'ART'
 
 # Load the model and tokenizer
 def load_model(model_id):
