@@ -282,6 +282,12 @@ def evaluate(
                 docs_for_decontamination[(task_name, task_set)].append(
                     task.doc_to_decontamination_query(doc)
                 )
+            print("Extra answers")
+            # Generate an extra answer using the subject
+            word, pos = p.get_sentence_subject(doc['question'])
+            sentence = p.generate_fake_answer(word, pos, model, tokenizer)
+            # Add the generated sentence to the doc
+            doc['choices'].append(sentence)
             # If question is accessed using 'query'
             if 'query' in doc:
                 # Check if shuffle is set
