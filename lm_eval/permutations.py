@@ -128,7 +128,7 @@ def get_sentence_subject(sentence):
 # Load the model and tokenizer
 def load_model(model_id):
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto", load_in_8bit=True)
     # Print teh model device
     print("Model Device:", next(model.parameters()).device)
     return tokenizer, model
