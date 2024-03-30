@@ -35,6 +35,6 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 25 \
             --tasks arc_challenge \
             --write_out \
-            --extra_answers true
+            --extra_answers True 
 
 
