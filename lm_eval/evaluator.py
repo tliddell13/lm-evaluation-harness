@@ -282,9 +282,8 @@ def evaluate(
                 docs_for_decontamination[(task_name, task_set)].append(
                     task.doc_to_decontamination_query(doc)
                 )
-            print("Extra answers")
             # Generate an extra answer using the subject
-            word, pos = p.get_sentence_subject(doc['question'])
+            word, pos = p.get_sentence_subject(doc['query'])
             sentence = p.generate_fake_answer(word, pos, model, tokenizer)
             # Add the generated sentence to the doc
             doc['choices'].append(sentence)
