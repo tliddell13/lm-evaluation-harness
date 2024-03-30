@@ -113,6 +113,11 @@ def verbSynonyms(words):
 
 # Gets the subject of a sentence. If one is not found, will return first noun, then first word
 def get_sentence_subject(sentence):
+    words = tokenizer(sentence)  # Tokenize the sentence into words
+    # Check if the question contains "Question:" and "Answer:"
+    if words[0] == "Question":
+        # Remove the tokens 'Question' and ':' for the shuffle
+        words = words[2:]
     # Return the first subject found in the sentence
     doc = nlp(sentence)
     for token in doc:
