@@ -247,7 +247,6 @@ class TruthfulQAGeneration(Task):
             part of the document for `doc`.
         """
         # TODO: Find a way to cap the number of generated tokens to `50` as in the official implementation.
-        # Remove this maybe
         completion = rf.greedy_until(ctx, {"until": ["."]})
         completion = rf.greedy(ctx)
         return completion
