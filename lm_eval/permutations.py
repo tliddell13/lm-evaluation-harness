@@ -35,8 +35,8 @@ def shuffle(sentence, task, type):
         words = bigram_shuffle(words)
     elif type == "trigram":
         words = trigram_shuffle(words)
-    # Turn the words back into a sentence
-    words = [word.text for word in words]
+    # Turn the words back into a string
+    words = " ".join([word.text for word in words])
     # Re-append the "Question:" token if it was removed
     if appendQuestion:
         words = "Question: " + words
