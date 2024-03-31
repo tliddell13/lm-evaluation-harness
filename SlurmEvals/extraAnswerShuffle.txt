@@ -1,0 +1,58 @@
+[38;5;127mlibs[0m/[38;5;172mnvidia-cuda[0m/[38;5;67m11.2.0[0m/[38;5;68mbin[0m
+ |
+ [0;32mOK[0m
+Sun Mar 31 15:58:40 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.154.05             Driver Version: 535.154.05   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-PCIE-40GB          Off | 00000000:13:00.0 Off |                    0 |
+| N/A   30C    P0              34W / 250W |      0MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Selected Tasks: ['arc_challenge']
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  6.37it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  7.13it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  7.00it/s]
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Task: arc_challenge; number of docs: 1172
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:04<00:04,  4.78s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.01s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.27s/it]
+Truncation was not explicitly activated but `max_length` is provided a specific value, please use `truncation=True` to explicitly truncate examples to max length. Defaulting to 'longest_first' truncation strategy. If you encode pairs of sequences (GLUE-style) with the tokenizer you can select this strategy more precisely by providing a specific strategy to `truncation`.
+Model Device: cuda:0
+Traceback (most recent call last):
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 123, in <module>
+    main()
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 80, in main
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 116, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 294, in evaluate
+    doc['query'] = p.shuffle(doc['query'], task_name, shuffle)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/permutations.py", line 33, in shuffle
+    words = unigram_shuffle(words)
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/permutations.py", line 49, in unigram_shuffle
+    random.shuffle(words)  # Shuffle the order of words
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/archive/miniconda3/envs/llmTranslate/lib/python3.12/random.py", line 357, in shuffle
+    x[i], x[j] = x[j], x[i]
+    ~^^^
+TypeError: 'spacy.tokens.span.Span' object does not support item assignment
