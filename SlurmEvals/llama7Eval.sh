@@ -11,18 +11,18 @@
 
 #Enable modules command
 source /opt/flight/etc/setup.sh
-flight env activate gridware
+#flight env activate gridware
 
 #Remove any unwanted modules
 module purge
-module load libs/nvidia-cuda/11.2.0/bin
+#module load libs/nvidia-cuda/11.2.0/bin
 
 source ~/archive/miniconda3/etc/profile.d/conda.sh
 conda activate llmTranslate
-nvidia-smi
-GPUS_PER_NODE=1
+#nvidia-smi
+#GPUS_PER_NODE=1
 # Number of GPU workers, for single-worker training, please set to 1
-WORKER_CNT=1
+#WORKER_CNT=1
 export MASTER_PORT=8214
 # The rank of this worker, should be in {0, ..., WORKER_CNT-1}, for single-worker training, please set to 0
 export RANK=0
@@ -32,10 +32,9 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 25 \
+            --num_fewshot 0 \
             --tasks arc_challenge \
             --write_out \
-            --shuffle unigram \
-            --extra_answers True 
+            --named_entities keep
 
 
