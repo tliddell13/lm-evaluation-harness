@@ -22,11 +22,11 @@ def shuffle(sentence, task, type):
     appendAnswer = False
     words = nltokenizer(sentence) # Tokenize the sentence into words
     # Check if the question contains "Question:" and "Answer:"
-    if words[0].text == "Question":
+    if words[0] == "Question":
         # Remove the tokens 'Question' and ':' for the shuffle
         words = words[2:]
         appendQuestion = True
-    if words[-2].text == "Answer":
+    if words[-2] == "Answer":
         # Remove the tokens 'Answer' and ':' for the shuffle
         words = words[:-2]
         appendAnswer = True
