@@ -35,12 +35,13 @@ def shuffle(sentence, task, type):
         words = bigram_shuffle(words)
     elif type == "trigram":
         words = trigram_shuffle(words)
+    words = ' '.join(words)
     # Re-append the "Question:" token if it was removed
     if appendQuestion:
-        words = ["Question:"] + words
+        words = "Question: " + words
     if appendAnswer:
-        words = words + ["Answer:"]
-    return ' '.join(words)  # Join the shuffled words back into a sentence
+        words = words + " Answer:"
+    return words  # Join the shuffled words back into a sentence
     
 # Shuffle sets of one word
 def unigram_shuffle(words):
