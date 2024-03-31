@@ -10,7 +10,7 @@ from transformers import (
 )
 
 nlp = spacy.load("en_core_web_sm")
-tokenizer = nltk.tokenize.word_tokenize
+nltokenizer = nltk.tokenize.word_tokenize
 
 # Shuffle the words in a sentence
 def shuffle(sentence, task, type):
@@ -20,7 +20,7 @@ def shuffle(sentence, task, type):
     # Keep track of whether we need to re-append the "Question:" token
     appendQuestion = False
     appendAnswer = False
-    words = tokenizer(sentence) # Tokenize the sentence into words
+    words = nltokenizer(sentence) # Tokenize the sentence into words
     # Check if the question contains "Question:" and "Answer:"
     if words[0].text == "Question":
         # Remove the tokens 'Question' and ':' for the shuffle
