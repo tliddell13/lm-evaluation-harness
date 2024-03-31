@@ -301,9 +301,14 @@ def evaluate(
                 if remove_question:
                     doc['query'] = ' '
                 if named_entities == "remove":
-                    doc['query'] = p.remove_named_entities(doc['query'])
+                    doc['query'] = p.removeNE(doc['query'])
                 if named_entities == "keep":
-                    doc['query'] = p.keep_named_entities(doc['query'])
+                    doc['query'] = p.onlyNE(doc['query'])
+                if extra_answers:
+                    word, pos = p.get_sentence_subject(doc['query'])
+                    sentence = p.generate_fake_answer(word, pos, model, tokenizer)
+                    # Add the generated sentence to the doc
+                    doc['choices'].append(sentence)
             # If question is accessed using 'sentence'
             elif 'sentence' in doc:
                 if shuffle:
@@ -313,9 +318,9 @@ def evaluate(
                 if remove_question:
                     doc['sentence'] = ' '
                 if named_entities == "remove":
-                    doc['sentence'] = p.remove_named_entities(doc['sentence'])
+                    doc['sentence'] = p.removeNE(doc['sentence'])
                 if named_entities == "keep":
-                    doc['sentence'] = p.keep_named_entities(doc['sentence'])
+                    doc['sentence'] = p.onlyNE(doc['sentence'])
             # If question is accessed using 'question'
             elif 'question' in doc:
                 if shuffle:
@@ -325,9 +330,9 @@ def evaluate(
                 if remove_question:
                     doc['question'] = ' '
                 if named_entities == "remove":
-                    doc['question'] = p.remove_named_entities(doc['question'])
+                    doc['question'] = p.removeNE(doc['question'])
                 if named_entities == "keep":
-                    doc['question'] = p.keep_named_entities(doc['question'])
+                    doc['question'] = p.onlyNE(doc['question'])
     
                 if extra_answers: 
                     print("Extra answers")
