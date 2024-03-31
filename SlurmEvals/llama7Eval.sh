@@ -33,7 +33,7 @@ python ~/lm-evaluation-harness/main.py \
             --batch_size 2 \
             --device cuda:0 \
             --num_fewshot 0 \
-            --tasks arc_challenge \
+            --tasks truthfulqa_gen \
             --write_out \
             --named_entities keep
 
