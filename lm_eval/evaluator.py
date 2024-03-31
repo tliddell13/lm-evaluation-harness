@@ -291,7 +291,7 @@ def evaluate(
             if 'query' in doc:
                 # Check if shuffle is set
                 if shuffle:
-                    doc['query'] = p.shuffle(doc['query'], shuffle, task_name)
+                    doc['query'] = p.shuffle(doc['query'], task_name, shuffle)
                 # Check if PosReplace is set
                 if posReplace == "VERB":
                     doc['query'] = p.verbSynonyms(doc['query'])
@@ -305,7 +305,7 @@ def evaluate(
             # If question is accessed using 'sentence'
             elif 'sentence' in doc:
                 if shuffle:
-                    doc['sentence'] = p.shuffle(doc['sentence'], shuffle, task_name)
+                    doc['sentence'] = p.shuffle(doc['sentence'], task_name, shuffle)
                 if posReplace == "VERB":
                     doc['sentence'] = p.verbSynonyms(doc['sentence']) 
                 if remove_question:
@@ -317,7 +317,7 @@ def evaluate(
             # If question is accessed using 'question'
             elif 'question' in doc:
                 if shuffle:
-                    doc['question'] = p.shuffle(doc['question'], shuffle, task_name)
+                    doc['question'] = p.shuffle(doc['question'], task_name, shuffle)
                 if posReplace == "VERB":
                     doc['question'] = p.verbSynonyms(doc['question'])
                 if remove_question:

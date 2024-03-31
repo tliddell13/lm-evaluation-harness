@@ -31,9 +31,9 @@ def shuffle(sentence, task, type):
         appendAnswer = True
     if type == "unigram":
         words = unigram_shuffle(words)
-    elif type == "bigram":
+    if type == "bigram":
         words = bigram_shuffle(words)
-    elif type == "trigram":
+    if type == "trigram":
         words = trigram_shuffle(words)
     # Turn the words back into a string
     words = " ".join([word.text for word in words])
@@ -115,15 +115,13 @@ def verbSynonyms(words):
 # Gets the subject of a sentence. If one is not found, will return first noun, then first word
 def get_sentence_subject(sentence):
     doc = nlp(sentence)
-    if doc[0].text == 'Question':
-        doc = doc[1:]
+    # Get the first named entity in the sentence using spacy
+    for ent in doc.ents:
+        return ent.text, 'NE'
+    # If there is no named entity, try and get the subject
     for token in doc:
         if token.dep_ == 'nsubj':
-            return token.text, 'NOUN'
-        # if the subject doesn't exist, return the first noun
-        elif token.pos_ == 'NOUN':
-            return token.text, 'NOUN'
-    # Worst case just get the first word
+            return token.text, 'SUB'  
     return doc[0].text, 'ART'
 
 # Load the model and tokenizer
@@ -140,7 +138,7 @@ def generate_fake_answer(word, pos, model, tokenizer):
     generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
     # Start generating a sentence with the word
-    if pos == 'NOUN': 
+    if pos == 'NE' or pos == 'SUB': 
         prompt = "The " + word
     
     # If no nouns are found the sentence will be completely random
