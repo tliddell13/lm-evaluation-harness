@@ -37,7 +37,7 @@ def shuffle(sentence, task, type):
     if type == "trigram":
         words = trigram_shuffle(words)
     # Turn the words back into a string
-    words = " ".join([word.text for word in words])
+    words = " ".join([word for word in words])
     # Re-append the "Question:" token if it was removed
     if appendQuestion:
         words = "Question: " + words
