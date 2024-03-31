@@ -18,7 +18,7 @@ module purge
 module load libs/nvidia-cuda/11.2.0/bin
 
 source ~/archive/miniconda3/etc/profile.d/conda.sh
-conda activate llm
+conda activate llmTranslate
 nvidia-smi
 GPUS_PER_NODE=1
 # Number of GPU workers, for single-worker training, please set to 1
