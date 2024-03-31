@@ -35,7 +35,8 @@ def shuffle(sentence, task, type):
         words = bigram_shuffle(words)
     elif type == "trigram":
         words = trigram_shuffle(words)
-    words = ' '.join(words)
+    # Turn the words back into a sentence
+    words = [word.text for word in words]
     # Re-append the "Question:" token if it was removed
     if appendQuestion:
         words = "Question: " + words
@@ -68,7 +69,7 @@ def hendrycks_shuffle(sentence, type):
     index_of_A = sentence.find("A.")
     words_before_A = sentence[:index_of_A]
     words_after_A = sentence[index_of_A:]
-    words_before_A = tokenizer(words_before_A)
+    words_before_A = nlp(words_before_A)
     # Shuffle the words before "A"
     if type == "unigram":
         random.shuffle(words_before_A)
