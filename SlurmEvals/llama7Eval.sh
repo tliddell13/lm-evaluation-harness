@@ -32,9 +32,9 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 0 \
-            --tasks truthfulqa_gen \
+            --num_fewshot 25 \
+            --tasks arc_challenge \
             --write_out \
-            --named_entities keep
+            --extra_answers True
 
 

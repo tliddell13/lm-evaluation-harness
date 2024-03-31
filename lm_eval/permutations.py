@@ -123,6 +123,11 @@ def get_sentence_subject(sentence):
     for token in doc:
         if token.dep_ == 'nsubj':
             return token.text, 'SUB'  
+    # If there is no subject, return the first noun
+    for token in doc:
+        if token.pos_ == 'NOUN':
+            return token.text, 'NOUN'
+    # If there is no noun, return the first word
     return doc[0].text, 'ART'
 
 # Load the model and tokenizer
@@ -139,7 +144,7 @@ def generate_fake_answer(word, pos, model, tokenizer):
     generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
     # Start generating a sentence with the word
-    if pos == 'NE' or pos == 'SUB': 
+    if pos == 'NE' or pos == 'SUB' or pos == 'NOUN': 
         prompt = "The " + word
     
     # If no nouns are found the sentence will be completely random
