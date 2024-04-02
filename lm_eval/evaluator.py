@@ -516,6 +516,13 @@ def evaluate(
                     encoding="utf8",
                 ) as fp:
                     json.dump(write_out_info[task_name], fp, indent=4, ensure_ascii=False)
+            elif named_entities == "remove" or named_entities == "keep":
+                with open(
+                    output_base_path.joinpath(f"{named_entities}_NE_" + f"{task_name}_write_out_info.json"),
+                    "w",
+                    encoding="utf8",
+                ) as fp:
+                    json.dump(write_out_info[task_name], fp, indent=4, ensure_ascii=False)
             # None of the above
             else:
                 with open(
