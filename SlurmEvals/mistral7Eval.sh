@@ -17,7 +17,7 @@ source /opt/flight/etc/setup.sh
 module purge
 #module load libs/nvidia-cuda/11.2.0/bin
 
-source ~/miniconda3/etc/profile.d/conda.sh
+source ~/archive/miniconda3/etc/profile.d/conda.sh
 conda activate llmTranslate
 #nvidia-smi
 #GPUS_PER_NODE=1
