@@ -35,7 +35,7 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 0 \
             --tasks truthfulqa_gen \
             --write_out \
-            --named_entities keep
+            --shuffle unigram
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -44,7 +44,6 @@ python ~/lm-evaluation-harness/main.py \
             --device cuda:0 \
             --num_fewshot 0 \
             --tasks truthfulqa_gen \
-            --write_out \
-            --named_entities remove
+            --write_out 
 
 

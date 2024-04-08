@@ -9,7 +9,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL                       # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=tyler.liddell@city.ac.uk   # Where to send mail
 
-#Enable modules command
+#Enable modules command 
 source /opt/flight/etc/setup.sh
 flight env activate gridware
 
