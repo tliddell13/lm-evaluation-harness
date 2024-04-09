@@ -32,7 +32,6 @@ _CITATION = """
 }
 """
 
-
 ANS_RE = re.compile(r"#### (\-?[0-9\.\,]+)")
 INVALID_ANS = "[invalid]"
 

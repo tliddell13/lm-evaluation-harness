@@ -36,6 +36,7 @@ def simple_evaluate(
     posReplace=None,
     extra_answers=False,
     named_entities=None,
+    cot = False,
 ):
     """Instantiate and evaluate a model on a list of tasks.
 
@@ -129,6 +130,7 @@ def simple_evaluate(
         posReplace = posReplace,
         extra_answers = extra_answers,
         named_entities = named_entities,
+        cot = cot
     )
 
     # add info about the model and few shot config
@@ -177,6 +179,7 @@ def evaluate(
     posReplace=None,
     extra_answers=False,
     named_entities=None,
+    cot = False,
 ):
     """Instantiate and evaluate a model on a list of tasks.
 
@@ -277,6 +280,10 @@ def evaluate(
         # Load the model if we are appending extra answers
         if extra_answers:
             tokenizer, model = p.load_model("/users/adbt150/archive/Llama-2-7b-hf")
+        if cot and task_name == "gsm8k":
+            # load the chain of thought prompt
+            with open('gsm8k_prompt.txt', 'r') as file:
+                CoT = file.read()
         for doc_id, doc in enumerate(itertools.islice(task_docs, 0, limit)):
             if decontaminate and task.should_decontaminate():
                 docs_for_decontamination[(task_name, task_set)].append(
@@ -289,6 +296,8 @@ def evaluate(
             # Add the generated sentence to the doc
             doc['choices'].append(sentence)
             """
+            if cot and task_name == "gsm8k":
+                doc["question"] = CoT + "\n\n" + doc["question"]
             # If question is accessed using 'query'
             if 'query' in doc:
                 # Check if shuffle is set

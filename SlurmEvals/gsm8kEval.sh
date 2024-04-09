@@ -30,7 +30,7 @@ export RANK=0
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
-            --batch_size 5 \
+            --batch_size 2 \
             --device cuda:0 \
             --num_fewshot 5 \
             --tasks gsm8k \
@@ -41,7 +41,7 @@ python ~/lm-evaluation-harness/main.py \
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/Llama-2-13b-hf \
-            --batch_size 5 \
+            --batch_size 2 \
             --device cuda:0 \
             --num_fewshot 5 \
             --tasks gsm8k \
@@ -52,7 +52,7 @@ python ~/lm-evaluation-harness/main.py \
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/mpt-7b \
-            --batch_size 5 \
+            --batch_size 2 \
             --device cuda:0 \
             --num_fewshot 5 \
             --tasks gsm8k \
@@ -63,7 +63,7 @@ python ~/lm-evaluation-harness/main.py \
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
             --model_args pretrained=/users/adbt150/archive/Mistral-7B-v0.1 \
-            --batch_size 5 \
+            --batch_size 2 \
             --device cuda:0 \
             --num_fewshot 5 \
             --tasks gsm8k \
@@ -76,8 +76,8 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Mistral-7B-Instruct-v0.2 \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 0 \
-            --tasks truthfulqa_gen \
+            --num_fewshot 5 \
+            --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct \
             --shuffle unigram

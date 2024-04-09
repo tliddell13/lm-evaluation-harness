@@ -52,6 +52,8 @@ def parse_args():
     parser.add_argument("--extra_answers", type=bool, default=None)
     # Remove or keep only named entities in a prompt
     parser.add_argument("--named_entities", type=str, default=None)
+    # Custom argument to add CoT to the prompt for GSM8K
+    parser.add_argument("--cot", type = bool, default = False)
     return parser.parse_args()
 
 
@@ -99,6 +101,7 @@ def main():
         posReplace=args.posReplace,
         extra_answers=args.extra_answers,
         named_entities=args.named_entities,
+        cot = args.cot
     )
 
     dumped = json.dumps(results, indent=2)
