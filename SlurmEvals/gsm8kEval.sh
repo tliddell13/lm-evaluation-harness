@@ -35,8 +35,7 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama7 \
-            --shuffle unigram
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama7 
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -46,8 +45,7 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama13 \
-            --shuffle unigram
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama13 
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -57,8 +55,7 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mpt7 \
-            --shuffle unigram
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mpt7 
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -68,8 +65,7 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7 \
-            --shuffle unigram
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7 
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -79,8 +75,7 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct \
-            --shuffle unigram
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct 
             
 
 
