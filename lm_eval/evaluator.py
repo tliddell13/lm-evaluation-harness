@@ -282,7 +282,7 @@ def evaluate(
             tokenizer, model = p.load_model("/users/adbt150/archive/Llama-2-7b-hf")
         if cot and task_name == "gsm8k":
             # load the chain of thought prompt
-            with open('gsm8k_prompt.txt', 'r') as file:
+            with open('lm_eval/gsm8k_prompt.txt', 'r') as file:
                 CoT = file.read()
         for doc_id, doc in enumerate(itertools.islice(task_docs, 0, limit)):
             if decontaminate and task.should_decontaminate():
