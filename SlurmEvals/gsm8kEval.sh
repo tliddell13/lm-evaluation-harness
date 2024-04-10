@@ -35,7 +35,8 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama7 
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama7 \
+            --cot True
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -45,7 +46,8 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama13 
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama13 \
+            --cot True 
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -55,7 +57,8 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mpt7 
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mpt7 \
+            --cot True
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -65,7 +68,8 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7 
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7 \
+            --cot True
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -75,7 +79,8 @@ python ~/lm-evaluation-harness/main.py \
             --num_fewshot 5 \
             --tasks gsm8k \
             --write_out \
-            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct 
+            --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct \
+            --cot True 
             
 
 
