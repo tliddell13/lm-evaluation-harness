@@ -1,0 +1,157 @@
+/var/spool/slurmd.spool/job828700/slurm_script: line 17: module: command not found
+/var/spool/slurmd.spool/job828700/slurm_script: line 18: module: command not found
+Wed Apr 10 14:45:27 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.154.05             Driver Version: 535.154.05   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-PCIE-40GB          Off | 00000000:13:00.0 Off |                    0 |
+| N/A   50C    P0              39W / 250W |      0MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+2024-04-10 14:45:35.306671: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-04-10 14:45:35.365472: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-04-10 14:45:36.523778: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Selected Tasks: ['gsm8k']
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.60it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.93it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.87it/s]
+Task: gsm8k; number of docs: 1319
+Traceback (most recent call last):
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 126, in <module>
+    main()
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 82, in main
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 117, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 285, in evaluate
+    with open('gsm8k_prompt.txt', 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'gsm8k_prompt.txt'
+2024-04-10 14:46:13.229596: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-04-10 14:46:13.290078: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-04-10 14:46:14.323993: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Selected Tasks: ['gsm8k']
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  3.99it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  4.39it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.42it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.36it/s]
+Task: gsm8k; number of docs: 1319
+Traceback (most recent call last):
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 126, in <module>
+    main()
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 82, in main
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 117, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 285, in evaluate
+    with open('gsm8k_prompt.txt', 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'gsm8k_prompt.txt'
+2024-04-10 14:46:58.210976: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-04-10 14:46:58.271483: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-04-10 14:46:59.501211: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/users/adbt150/.cache/huggingface/modules/transformers_modules/mpt-7b/configuration_mpt.py:114: UserWarning: alibi or rope is turned on, setting `learned_pos_emb` to `False.`
+  warnings.warn(f'alibi or rope is turned on, setting `learned_pos_emb` to `False.`')
+/users/adbt150/.cache/huggingface/modules/transformers_modules/mpt-7b/configuration_mpt.py:141: UserWarning: If not using a Prefix Language Model, we recommend setting "attn_impl" to "flash" instead of "triton".
+  warnings.warn(UserWarning('If not using a Prefix Language Model, we recommend setting "attn_impl" to "flash" instead of "triton".'))
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Selected Tasks: ['gsm8k']
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.25it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.81it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.71it/s]
+Task: gsm8k; number of docs: 1319
+Traceback (most recent call last):
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 126, in <module>
+    main()
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 82, in main
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 117, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 285, in evaluate
+    with open('gsm8k_prompt.txt', 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'gsm8k_prompt.txt'
+2024-04-10 14:47:24.094912: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-04-10 14:47:24.153945: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-04-10 14:47:25.129558: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Selected Tasks: ['gsm8k']
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.11it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.66it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.57it/s]
+Task: gsm8k; number of docs: 1319
+Traceback (most recent call last):
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 126, in <module>
+    main()
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 82, in main
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 117, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 285, in evaluate
+    with open('gsm8k_prompt.txt', 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'gsm8k_prompt.txt'
+2024-04-10 14:47:48.067746: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-04-10 14:47:48.128043: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-04-10 14:47:49.092793: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Selected Tasks: ['gsm8k']
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  4.25it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  4.59it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.81it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.71it/s]
+Task: gsm8k; number of docs: 1319
+Traceback (most recent call last):
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 126, in <module>
+    main()
+  File "/users/adbt150/lm-evaluation-harness/main.py", line 82, in main
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 117, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/utils.py", line 243, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/users/adbt150/lm-evaluation-harness/lm_eval/evaluator.py", line 285, in evaluate
+    with open('gsm8k_prompt.txt', 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'gsm8k_prompt.txt'
