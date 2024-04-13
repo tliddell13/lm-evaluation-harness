@@ -32,7 +32,7 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Llama-2-7b-hf \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 5 \
+            --num_fewshot 0 \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama7 \
@@ -43,7 +43,7 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Llama-2-13b-hf \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 5 \
+            --num_fewshot 0 \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama13 \
@@ -54,7 +54,7 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/mpt-7b \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 5 \
+            --num_fewshot 0 \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mpt7 \
@@ -65,7 +65,7 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Mistral-7B-v0.1 \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 5 \
+            --num_fewshot 0 \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7 \
@@ -76,7 +76,7 @@ python ~/lm-evaluation-harness/main.py \
             --model_args pretrained=/users/adbt150/archive/Mistral-7B-Instruct-v0.2 \
             --batch_size 2 \
             --device cuda:0 \
-            --num_fewshot 5 \
+            --num_fewshot 0 \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct \
