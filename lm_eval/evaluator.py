@@ -352,8 +352,6 @@ def evaluate(
             # Add the generated sentence to the doc
             doc['choices'].append(sentence)
             """
-            if cot and task_name == "gsm8k":
-                doc["question"] = CoT_Prompt + "\n\n" + doc["question"]
             # If question is accessed using 'query'
             if 'query' in doc:
                 # Check if shuffle is set
@@ -406,8 +404,10 @@ def evaluate(
                     sentence = p.generate_fake_answer(word, pos, model, tokenizer)
                     # Add the generated sentence to the doc
                     doc['choices'].append(sentence)
+            
+            if cot and task_name == "gsm8k":
+                doc["question"] = CoT_Prompt + "\n\n" + doc["question"]
                     
-
             docs[(task_name, doc_id)] = doc
             ctx = task.fewshot_context(
                 doc=doc, num_fewshot=num_fewshot, rnd=rnd, description=description
