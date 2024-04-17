@@ -36,7 +36,8 @@ python ~/lm-evaluation-harness/main.py \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama7 \
-            --cot True
+            --cot True \
+            --shuffle unigram
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -47,7 +48,8 @@ python ~/lm-evaluation-harness/main.py \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/llama13 \
-            --cot True 
+            --cot True \
+            --shuffle unigram
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -69,7 +71,8 @@ python ~/lm-evaluation-harness/main.py \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7 \
-            --cot True
+            --cot True \
+            --shuffle unigram
 
 python ~/lm-evaluation-harness/main.py \
             --model hf-causal-experimental \
@@ -80,7 +83,8 @@ python ~/lm-evaluation-harness/main.py \
             --tasks gsm8k \
             --write_out \
             --output_base_path /users/adbt150/lm-evaluation-harness/SlurmEvals/mistral7Instruct \
-            --cot True 
+            --cot True \
+            --shuffle unigram
             
 
 
