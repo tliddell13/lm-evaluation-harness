@@ -33,7 +33,7 @@ python ~/lm-evaluation-harness/main.py \
             --batch_size 3 \
             --device cuda:0 \
             --num_fewshot 25 \
-            --tasks arc-challenge \
+            --tasks arc_challenge \
             --write_out \
             --shuffle unigram
 
@@ -53,7 +53,7 @@ python ~/lm-evaluation-harness/main.py \
             --batch_size 10 \
             --device cuda:0 \
             --num_fewshot 0 \
-            --tasks truthfulqa-mc \
+            --tasks truthfulqa_mc \
             --write_out \
             --shuffle unigram
 
