@@ -1,21 +1,34 @@
-# Language Model Evaluation Harness
+# Language Model Evaluation Harness with Word Order Permutations
 
-## We're Refactoring LM-Eval!
-(as of 6/15/23)
-We have a revamp of the Evaluation Harness library internals staged on the [big-refactor](https://github.com/EleutherAI/lm-evaluation-harness/tree/big-refactor) branch! It is far along in progress, but before we start to move the `master` branch of the repository over to this new design with a new version release, we'd like to ensure that it's been tested by outside users and there are no glaring bugs.
+This is an extended version of the original [EleutherAI lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) that adds support for word order permutations and other text modifications during evaluation. This extension was developed as part of research investigating the sensitivity of Large Language Models to linguistic structures, particularly word order.
 
-We’d like your help to test it out! you can help by:
-1. Trying out your current workloads on the big-refactor branch, and seeing if anything breaks or is counterintuitive,
-2. Porting tasks supported in the previous version of the harness to the new YAML configuration format. Please check out our [task implementation guide](https://github.com/EleutherAI/lm-evaluation-harness/blob/big-refactor/docs/new_task_guide.md) for more information.
+## 🔬 Research Extensions
 
-If you choose to port a task not yet completed according to [our checklist](https://github.com/EleutherAI/lm-evaluation-harness/blob/big-refactor/lm_eval/tasks/README.md), then you can contribute it by opening a PR containing [Refactor] in the name with:
-- A shell command to run the task in the `master` branch, and what the score is
-- A shell command to run the task in your PR branch to `big-refactor`, and what the resulting score is, to show that we achieve equality between the two implementations.
+This version allows for various permutations to be applied to datasets during evaluation to study model robustness:
 
-Lastly, we'll no longer be accepting new feature requests beyond those that are already open to the master branch as we carry out this switch to the new version over the next week, though we will be accepting bugfixes to `master` branch and PRs to `big-refactor`. Feel free to reach out in the #lm-thunderdome channel of the EAI discord for more information.
+### Available Permutation Arguments
 
+| Argument | Description | Options |
+|----------|-------------|---------|
+| `shuffle` | Shuffles question words | `unigram`, `bigram`, `trigram` |
+| `shuffleAnswer` | Shuffles answer choices | `unigram`, `bigram`, `trigram` |
+| `remove_question` | Removes the question entirely | `True`/`False` |
+| `posReplace` | Replaces parts of speech with synonyms | POS tag |
+| `extra_answers` | Generates distracting answers | `True`/`False` |
+| `named_entities` | Modify named entities | `remove_all`, `keep_only` |
+| `cot` | Use chain of thought prompting for GSM8K | `True`/`False` |
 
-## Overview
+### Implementation Details
+- **Permutation functions**: Defined in `permutations.py`
+- **Integration**: Applied during evaluation in `evaluator.py`
+- **Examples**: Slurm job scripts in `SlurmEvals/` folder
+- **Results**: Analysis and outputs in `permutation_results/` folder
+
+---
+
+## 📖 Original LM-Evaluation-Harness Documentation
+
+### Overview
 
 This project provides a unified framework to test generative language models on a large number of different evaluation tasks.
 
@@ -30,21 +43,21 @@ Features:
 
 ## Install
 
-To install `lm-eval` from the github repository main branch, run:
+To install `lm-eval` from this extended repository:
 
 ```bash
-git clone https://github.com/EleutherAI/lm-evaluation-harness
+git clone https://github.com/tliddell13/lm-evaluation-harness
 cd lm-evaluation-harness
 pip install -e .
 ```
 
-To install additional multilingual tokenization and text segmentation packages, you must install the package with the `multilingual` extra:
+To install additional multilingual tokenization and text segmentation packages:
 
 ```bash
 pip install -e ".[multilingual]"
 ```
 
-To support loading GPTQ quantized models, install the package with the `auto-gptq` extra:
+To support loading GPTQ quantized models:
 
 ```bash
 pip install -e ".[auto-gptq]"
@@ -52,12 +65,11 @@ pip install -e ".[auto-gptq]"
 
 ## Basic Usage
 
-> **Note**: When reporting results from eval harness, please include the task versions (shown in `results["versions"]`) for reproducibility. This allows bug fixes to tasks while also ensuring that previously reported scores are reproducible. See the [Task Versioning](#task-versioning) section for more info.
+> **Note**: When reporting results from eval harness, please include the task versions (shown in `results["versions"]`) for reproducibility.
 
-### Hugging Face `transformers`
+### Standard Evaluation
 
-To evaluate a model hosted on the [HuggingFace Hub](https://huggingface.co/models) (e.g. GPT-J-6B) on `hellaswag` you can use the following command:
-
+To evaluate a model on standard benchmarks:
 
 ```bash
 python main.py \
@@ -67,19 +79,29 @@ python main.py \
     --device cuda:0
 ```
 
-Additional arguments can be provided to the model constructor using the `--model_args` flag. Most notably, this supports the common practice of using the `revisions` feature on the Hub to store partially trained checkpoints, or to specify the datatype for running a model:
+### Evaluation with Permutations
+
+To evaluate with word order shuffling:
 
 ```bash
 python main.py \
     --model hf-causal \
-    --model_args pretrained=EleutherAI/pythia-160m,revision=step100000,dtype="float" \
-    --tasks lambada_openai,hellaswag \
+    --model_args pretrained=EleutherAI/gpt-j-6B \
+    --tasks hellaswag \
+    --shuffle unigram \
     --device cuda:0
 ```
 
-To evaluate models that are loaded via `AutoSeq2SeqLM` in Huggingface, you instead use `hf-seq2seq`. *To evaluate (causal) models across multiple GPUs, use `--model hf-causal-experimental`*
+To evaluate with question removal:
 
-> **Warning**: Choosing the wrong model may result in erroneous outputs despite not erroring.
+```bash
+python main.py \
+    --model hf-causal \
+    --model_args pretrained=EleutherAI/gpt-j-6B \
+    --tasks truthfulqa_mc \
+    --remove_question True \
+    --device cuda:0
+```
 
 ### Commercial APIs
 
@@ -93,44 +115,22 @@ python main.py \
     --tasks lambada_openai,hellaswag
 ```
 
-While this functionality is only officially maintained for the official OpenAI API, it tends to also work for other hosting services that use the same API such as [goose.ai](goose.ai) with minor modification. We also have an implementation for the [TextSynth](https://textsynth.com/index.html) API, using `--model textsynth`.
-
-To verify the data integrity of the tasks you're performing in addition to running the tasks themselves, you can use the `--check_integrity` flag:
-
-```bash
-python main.py \
-    --model gpt3 \
-    --model_args engine=davinci \
-    --tasks lambada_openai,hellaswag \
-    --check_integrity
-```
-
 ### Other Frameworks
 
 A number of other libraries contain scripts for calling the eval harness through their library. These include [GPT-NeoX](https://github.com/EleutherAI/gpt-neox/blob/main/eval_tasks/eval_adapter.py), [Megatron-DeepSpeed](https://github.com/microsoft/Megatron-DeepSpeed/blob/main/examples/MoE/readme_evalharness.md), and [mesh-transformer-jax](https://github.com/kingoflolz/mesh-transformer-jax/blob/master/eval_harness.py).
 
-💡 **Tip**: You can inspect what the LM inputs look like by running the following command:
+## Research Applications
 
-```bash
-python write_out.py \
-    --tasks all_tasks \
-    --num_fewshot 5 \
-    --num_examples 10 \
-    --output_base_path /path/to/output/folder
-```
+This extended version was used in research examining:
+- LLM sensitivity to word order perturbations
+- Benchmark robustness to input modifications  
+- The role of superficial cues vs. linguistic understanding in model performance
 
-This will write out one text file for each task.
+Results showed that many models maintain surprisingly high performance even with shuffled word order, suggesting reliance on keyword associations rather than deep linguistic understanding.
 
 ## Advanced Usage
 
-For models loaded with the HuggingFace  `transformers` library, any arguments provided via `--model_args` get passed to the relevant constructor directly. This means that anything you can do with `AutoModel` can be done with our library. For example, you can pass a local path via `pretrained=` or use models finetuned with [PEFT](https://github.com/huggingface/peft) by taking the call you would run to evaluate the base model and add `,peft=PATH` to the `model_args` argument:
-```bash
-python main.py \
-    --model hf-causal-experimental \
-    --model_args pretrained=EleutherAI/gpt-j-6b,peft=nomic-ai/gpt4all-j-lora \
-    --tasks openbookqa,arc_easy,winogrande,hellaswag,arc_challenge,piqa,boolq \
-    --device cuda:0
-```
+For models loaded with the HuggingFace `transformers` library, any arguments provided via `--model_args` get passed to the relevant constructor directly. This means that anything you can do with `AutoModel` can be done with our library.
 
 GPTQ quantized models can be loaded by specifying their file names in `,quantized=NAME` (or `,quantized=True` for default names) in the `model_args` argument:
 
@@ -143,25 +143,19 @@ python main.py \
 
 We support wildcards in task names, for example you can run all of the machine-translated lambada tasks via `--task lambada_openai_mt_*`.
 
-We currently only support one prompt per task, which we strive to make the "standard" as defined by the benchmark's authors. If you would like to study how varying prompts causes changes in the evaluation score, check out the [BigScience fork](https://github.com/bigscience-workshop/lm-evaluation-harness) of this repo. We are currently working on upstreaming this capability to `main`.
-
-## Implementing new tasks
+## Implementing New Tasks
 
 To implement a new task in the eval harness, see [this guide](./docs/task_guide.md).
 
 ## Task Versioning
 
-To help improve reproducibility, all tasks have a `VERSION` field. When run from the command line, this is reported in a column in the table, or in the "version" field in the evaluator return dict. The purpose of the version is so that if the task definition changes (i.e to fix a bug), then we can know exactly which metrics were computed using the old buggy implementation to avoid unfair comparisons. To enforce this, there are unit tests that make sure the behavior of all tests remains the same as when they were first implemented. Task versions start at 0, and each time a breaking change is made, the version is incremented by one.
+To help improve reproducibility, all tasks have a `VERSION` field. When run from the command line, this is reported in a column in the table, or in the "version" field in the evaluator return dict. Task versions start at 0, and each time a breaking change is made, the version is incremented by one.
 
 When reporting eval harness results, please also report the version of each task. This can be done either with a separate column in the table, or by reporting the task name with the version appended as such: taskname-v0.
 
 ## Test Set Decontamination
 
-To address concerns about train / test contamination, we provide utilities for comparing results on a benchmark using only the data points not found in the model training set. Unfortunately, outside of models trained on the Pile and C4, its very rare that people who train models disclose the contents of the training data. However this utility can be useful to evaluate models you have trained on private data, provided you are willing to pre-compute the necessary indices. We provide computed indices for 13-gram exact match deduplication against the Pile, and plan to add additional precomputed dataset indices in the future (including C4 and min-hash LSH deduplication).
-
-For details on text decontamination, see the [decontamination guide](./docs/decontamination.md).
-
-Note that the directory provided to the `--decontamination_ngrams_path` argument should contain the ngram files and info.json. See the above guide for ngram generation for the pile, this could be adapted for other training sets.
+We provide utilities for comparing results on a benchmark using only the data points not found in the model training set. For details on text decontamination, see the [decontamination guide](./docs/decontamination.md).
 
 ```bash
 python main.py \
@@ -172,6 +166,8 @@ python main.py \
 ```
 
 ## Cite as
+
+### Original Framework
 
 ```
 @software{eval-harness,
@@ -201,3 +197,32 @@ python main.py \
   url          = {https://doi.org/10.5281/zenodo.5371628}
 }
 ```
+
+### Word Order Permutation Extensions
+
+If you use the permutation capabilities, please also cite:
+
+```
+@mastersthesis{liddell2024experiments,
+  author = {Tyler Liddell},
+  title = {Experiments With Word Order In Large Language Models},
+  school = {City University of London},
+  year = {2024},
+  type = {MSci Project}
+}
+```
+
+## Repository Structure
+
+```
+├── lm_eval/                    # Core evaluation framework
+├── permutations.py            # Word order permutation functions
+├── evaluator.py               # Modified evaluator with permutation support  
+├── SlurmEvals/                # Example Slurm job scripts
+├── permutation_results/       # Results and analysis from permutation experiments
+└── docs/                      # Documentation
+```
+
+## Contributing
+
+We welcome contributions to both the core framework and the permutation extensions. Please see the original repository's contribution guidelines and ensure any new permutation methods are well-documented and tested.
